@@ -1,5 +1,5 @@
 ---
-title: "Project Graphs"
+title: "Project Analysis"
 author: "Zeerak Ahmed"
 date: "11-13-2025"
 output: pdf_document
@@ -361,5 +361,6 @@ plot(merged_data$num_movies, merged_data$num_crimes,
      pch = 19)
 
 abline(model, col = "red", lwd = 2)
+
 
 ```
