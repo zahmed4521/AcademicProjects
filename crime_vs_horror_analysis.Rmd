@@ -281,47 +281,6 @@ ggplot(percent, aes(x = factor(Year), y = Percentage,
       theme_minimal()
 
 #########################################################################
-# Movie releases VS Arrests - without month
-
-# Aggregate movie releases by year
-movies_by_year <- horror_data %>%
-  group_by(year) %>%
-  summarize(num_movies = n())
-
-# Aggregate crimes by year
-crimes_by_year <- police_arrests %>%
-  group_by(year) %>%
-  summarize(num_crimes = n())
-
-# Merge the two data frames by the common key (year)
-# This will keep only the years that exist in both datasets
-merged_data <- inner_join(movies_by_year, crimes_by_year, by = "year")
-
-# Linear Model to compare number of crimes VS number of movie releases
-model <- lm(num_crimes ~ num_movies, data = merged_data)
-
-# View the summary of the model
-summary(model)
-
-ggplot(merged_data, aes(x = num_movies, y = num_crimes)) +
-  geom_point() + # Add data points
-  geom_smooth(method = "lm", se = FALSE, color = "blue") + # Add linear regression line without confidence interval
-  labs(title = "Linear Regression of Crime Rate vs Movie Releases by Year",
-       x = "Number of Movie Releases",
-       y = "Number of Crimes") +
-  theme_minimal()
-
-# Create the scatter plot using base R plot()
-plot(merged_data$num_movies, merged_data$num_crimes,
-     main = "Linear Regression of Crime Rate vs Movie Releases by Year",
-     xlab = "Number of Movie Releases",
-     ylab = "Number of Crimes",
-     pch = 19, # Solid points
-     col = "black")
-
-# Add the regression line using abline() and the previously created model
-abline(model, col = "blue", lwd = 2)
-
 # Linear Regression Model for crime VS movie releases per month per year
 
 # Change the year and month columns to match across the data sets
@@ -353,6 +312,7 @@ merged_data <- inner_join(
 
 # Plot the regression
 model <- lm(num_crimes ~ num_movies, data = merged_data)
+summary(model)
 
 plot(merged_data$num_movies, merged_data$num_crimes,
      main = "Linear Regression of Crime vs Movie Releases",
@@ -362,5 +322,5 @@ plot(merged_data$num_movies, merged_data$num_crimes,
 
 abline(model, col = "red", lwd = 2)
 
-
 ```
+
